@@ -26,6 +26,7 @@ admin.site.index_title = "Welcome to Researcher Portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',include('App.urls')),
     path('',include('user.urls')),
    
     # path('',views.Home,name="Home"),
