@@ -9,20 +9,14 @@ from .models import Investment
 def Home(request):
     return render(request,'index.html')
 
+def Profile(request):
+    return render(request,'profile/profilepage.html')
+
 def dashboard1(request):
     investments = Investment.objects.all()  # Use filter to get a queryset
     data = {'investments': investments}
     return render(request, 'Dashboard1.html', data)
     
-
-def Portfolio(request):
-    investments = Investment.objects.filter(user = request.user)
-    data = {
-        'investments':investments
-    }
-    return render(request,'Dashboard1.html',data)
-
-
 
 def investnow(request):
     if request.method == 'POST':
