@@ -9,38 +9,45 @@ from .models import Investment
 def Home(request):
     return render(request,'index.html')
 
+def dashboard1(request):
+    investments = Investment.objects.all()  # Use filter to get a queryset
+    data = {'investments': investments}
+    return render(request, 'Dashboard1.html', data)
+    
+
 def Portfolio(request):
     investments = Investment.objects.filter(user = request.user)
     data = {
         'investments':investments
     }
-    return render(request,'profile/portfolio.html',data)
+    return render(request,'Dashboard1.html',data)
 
 
 
 def investnow(request):
     if request.method == 'POST':
-        name = request.POST['name']
-        prize = request.POST['prize']
-        time = request.POST['time']
-        risk = request.POST['risk']
+        name = request.POST.get('name')
+        prize = request.POST.get('prize')
+        time = request.POST.get('time')
+      
 
-        if(risk == 1):
-            per = 8
-        elif(risk == 2):
-            per = 10
-        else:
-            per = 12
+       
 
-        temp = ((int(prize)*int(time)/12*per)/100) + int(prize)
+        temp = ((int(prize) * int(time) / 12 ) / 100) + int(prize)
         
-        investment = Investment(name=name,user = request.user, prize=prize, time=time, risk=risk,total_amount=temp)
+        # Assuming you have an Investment model with the specified fields
+        investment = Investment.objects.create(
+            name=name,
+            # user=request.user,
+            prize=prize,
+            time=time,
+            total_amount=temp
+        )
+        investment.save
+        return redirect('dashboard1')
 
-        investment.save()
-
-        return redirect('portfolio')
-        
     return render(request, 'profile/make_investment.html')
+
 
 def addfunds(request):
     return render(request,'other/payment.html')
