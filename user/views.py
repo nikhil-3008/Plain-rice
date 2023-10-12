@@ -14,15 +14,6 @@ from email.mime.multipart import MIMEMultipart
 def about(request):
     return render(request,'about.html')
 
-def papers(request):
-    return render(request,'papers.html')
-
-def study_material(request):
-    return render(request,'study_material.html')
-
-def pdfviewer(request):
-    return render(request,'pdfviewer.html')
-
 def signup(request):
     if request.method == 'POST':
         username = request.POST.get('username')
