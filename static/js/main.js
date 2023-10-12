@@ -1,10 +1,4 @@
-/**
-* Template Name: Selecao
-* Updated: Sep 18 2023 with Bootstrap v5.3.2
-* Template URL: https://bootstrapmade.com/selecao-bootstrap-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+
 (function() {
   "use strict";
 
@@ -67,6 +61,10 @@
   const scrollto = (el) => {
     let header = select('#header')
     let offset = header.offsetHeight
+
+    if (!header.classList.contains('header-scrolled')) {
+      offset -= 20
+    }
 
     let elementPos = select(el).offsetTop
     window.scrollTo({
@@ -156,57 +154,27 @@
   });
 
   /**
-   * Porfolio isotope and filter
+   * Preloader
    */
-  window.addEventListener('load', () => {
-    let portfolioContainer = select('.portfolio-container');
-    if (portfolioContainer) {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: '.portfolio-item',
-      });
+  let preloader = select('#preloader');
+  if (preloader) {
+    window.addEventListener('load', () => {
+      preloader.remove()
+    });
+  }
 
-      let portfolioFilters = select('#portfolio-flters li', true);
-
-      on('click', '#portfolio-flters li', function(e) {
-        e.preventDefault();
-        portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
-        });
-        this.classList.add('filter-active');
-
-        portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        portfolioIsotope.on('arrangeComplete', function() {
-          AOS.refresh()
-        });
-      }, true);
-    }
-
+  /**
+   * Initiate glightbox
+   */
+  const glightbox = GLightbox({
+    selector: '.glightbox'
   });
 
   /**
-   * Initiate portfolio lightbox 
+   * Initiate gallery lightbox 
    */
-  const portfolioLightbox = GLightbox({
-    selector: '.portfolio-lightbox'
-  });
-
-  /**
-   * Portfolio details slider
-   */
-  new Swiper('.portfolio-details-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
+  const galleryLightbox = GLightbox({
+    selector: '.gallery-lightbox'
   });
 
   /**
@@ -224,17 +192,6 @@
       el: '.swiper-pagination',
       type: 'bullets',
       clickable: true
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 20
-      },
-
-      1200: {
-        slidesPerView: 3,
-        spaceBetween: 20
-      }
     }
   });
 
@@ -249,5 +206,10 @@
       mirror: false
     })
   });
+
+  /**
+   * Initiate Pure Counter 
+   */
+  new PureCounter();
 
 })()
