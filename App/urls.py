@@ -5,7 +5,7 @@ urlpatterns = [
     path('',Home,name="Home"),
     path('Profile',Profile,name='Profile'),
     path('investnow',investnow,name='investnow'),
-    path('addfunds',addfunds,name='addfunds'),
-    path('about',about,name='about'),
+    path('investorinfo',investorinfo,name ='investorinfo'),
     path('dashboard1',dashboard1,name='dashboard1'),
+    path('dashboard2',dashboard2,name='dashboard2'),
 ]

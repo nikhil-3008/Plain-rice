@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import requests
-from .models import Investment
+from .models import Investment ,Investor
 
 # Create your views here.
 
@@ -12,12 +12,21 @@ def Home(request):
 def Profile(request):
     return render(request,'profile/profilepage.html')
 
+def investorinfo(request):
+    return render(request,'basicInfo.html')
+
+
 def dashboard1(request):
-    investments = Investment.objects.all()  # Use filter to get a queryset
+    investments = Investment.objects.all()  
     data = {'investments': investments}
     return render(request, 'Dashboard1.html', data)
-    
 
+def dashboard2(request):
+    investors = Investor.objects.all()  
+    data = {'investors': investors}
+    return render(request, 'Dashboard2.html', data)
+
+    
 def investnow(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -29,7 +38,6 @@ def investnow(request):
 
         temp = ((int(prize) * int(time) / 12 ) / 100) + int(prize)
         
-        # Assuming you have an Investment model with the specified fields
         investment = Investment.objects.create(
             name=name,
             # user=request.user,
@@ -42,12 +50,24 @@ def investnow(request):
 
     return render(request, 'profile/make_investment.html')
 
+def investor(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        prize = request.POST.get('prize')
+        
+      
+        investor = Investor.objects.create(
+            name=name,
+            # user=request.user,
+            prize=prize,
+            
+        )
+        investor.save()
+        return redirect('dashboard2')
 
-def addfunds(request):
-    return render(request,'other/payment.html')
+    return render(request, 'basicInfo.html')
 
-def about(request):
-    return render(request,'about.html')
+
 
 
 
