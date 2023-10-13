@@ -98,7 +98,7 @@ def Login(request):
         
         if user is not None:
             login(request, user)
-            return redirect('Home')
+            return redirect('dashboard1')
         else:
            return render(request, 'login.html')
     else:
